@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <% include partials/head %>
+ <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+ <script type='text/javascript' src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js'></script>
+</head>
+<body>
+
+
+<div class="container-fluid bg-3 text-center">    
+  <h3><%= page %></h3><br>
+  <body>
+    <h1>Leaflet Example</h1>
+    
+    <p>Here's a map of the countries I've either lived in or travelled through for a month or more.
+    
+    <div id="map" style="height: 440px; border: 1px solid #AAA;"></div>
+    <div id="mapheat" style="height: 440px; border: 1px solid #AAA;"></div>
+  </body>
+</div>
+
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="./dist/leaflet-heat.js"></script>
+<script src="./dist/heatmap.min.js"></script>
+ <script src="./dist/leaflet-heatmap.js"></script>
+<script src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
+<% include partials/script %>
+<% include partials/leaflet %>
+
+</html>
