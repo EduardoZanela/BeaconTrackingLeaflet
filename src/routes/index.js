@@ -43,14 +43,17 @@ router.get('/teste', function(req, res, next) {
 });
 
 // fetchOrganization
-function getSomeData() {
+function getSomeData(params) {
+  request.start_date = params.dateFrom;
+  request.end_date = params.dateUntil;
   console.log(JSON.stringify(request));
-  return axios.post('http://192.168.0.107:8000/collector/resources/data', request);
+  return axios.post('http://192.168.0.152:8000/collector/resources/data', request);
 }
 
 // Route
-router.get("/v1/resources/data", (req, res) => {
-  getSomeData()
+router.post("/v1/resources/data", (req, res) => {
+  console.log("aqui ", req.body);
+  getSomeData(req.body)
     .then(response => {
       let markers = {
         max: 30,
@@ -74,6 +77,7 @@ router.get("/v1/resources/data", (req, res) => {
       });
       markers.max = maxCount.count;
       res.setHeader('Content-Type', 'application/json');
+      console.log('resp: ' + JSON.stringify(markers));
       res.end(JSON.stringify(markers, null, 3));
     })
 });

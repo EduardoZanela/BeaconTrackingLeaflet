@@ -1,11 +1,4 @@
 <script>
-
-  // don't forget to include leaflet-heatmap.js
-/*var testData = {
-  max: 30,
-  data: [{lat: 24.6408, lng:46.7728, count: 25},{lat: 50.75, lng:-1.55, count: 10}]
-};*/
-
 var baseLayer = L.tileLayer(
   'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
     attribution: '...',
@@ -37,10 +30,10 @@ var data = addressPoints.map(function (p) {
   var normalized = (intensity - min) / (max - min);
   return { lat: p[0], lng: p[1], count: parseInt(p[2]) || 0 };
 });
-console.log("DATA", data);
 
 var testData = {
   max: max,
+  min: min,
   data: data
 };
 
@@ -49,8 +42,45 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {maxZoom: 19}).addTo(map); 
 
 var heatmapLayer = new HeatmapOverlay(cfg).addTo(map);
+heatmapLayer.setData(testData);
 
-axios.get('http://localhost:3000/v1/resources/data').then(res =>{
-  heatmapLayer.setData(res.data);
+var now = new Date();
+var past = new Date(now.getTime() - 10*60000);
+axios.post('http://localhost:3000/v1/resources/data', {'dateFrom': now.toISOString(), 'dateUntil': past.toISOString()}).then(res =>{
+  if(res.data.data.length > 0){
+    map.setView([res.data.data[0].lat, res.data.data[0].lng], 12);
+    heatmapLayer.setData(res.data);
+  }
+});
+
+$('#send').click(function(e){
+  var timeFrom = $("#timeFrom").val();
+  var timeUntil = $("#timeUntil").val();
+  if(timeFrom == "" && timeUntil == ""){
+    $('.error').show();
+    return;
+  } else if(timeFrom == ""){
+    $('.error-from').show();
+    return;
+  } else if(timeUntil == ""){
+    $('.error-until').show();
+    return;
+  }
+  $('.search').show();
+  $("#send").attr("disabled", true);
+  console.log("time " + new Date(timeFrom).toISOString() + " " + timeUntil);
+  axios.post('http://localhost:3000/v1/resources/data', {'dateFrom': new Date(timeFrom).toISOString(), 'dateUntil': new Date(timeUntil).toISOString()}).then(res =>{
+    heatmapLayer.setData(res.data);
+    map.setView([res.data.data[0].lat, res.data.data[0].lng], 12);
+    $('.search').hide();
+    $("#send").attr("disabled", false);
+  }).catch(error => {
+    $('.search').hide();
+    $("#send").attr("disabled", false);
+  });
+})
+
+$('.input').focus(function(e){
+  $('.error').hide();
 });
 </script>

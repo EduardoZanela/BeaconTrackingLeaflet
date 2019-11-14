@@ -16,10 +16,12 @@
     "ejs": "2.7.1",
     "express": "4.17.1",
     "heatmap.js": "^2.0.5",
+    "loading-spinner": "^1.2.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
     "morgan": "1.9.1",
     "nodemon": "1.19.3",
-    "path": "0.12.7"
+    "path": "0.12.7",
+    "react-native": "^0.61.3"
   }
 }
