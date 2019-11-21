@@ -47,7 +47,7 @@ function getSomeData(params) {
   request.start_date = params.dateFrom;
   request.end_date = params.dateUntil;
   console.log(JSON.stringify(request));
-  return axios.post('http://192.168.0.152:8000/collector/resources/data', request);
+  return axios.post('http://177.67.253.26:8000/collector/resources/data', request);
 }
 
 // Route
@@ -72,12 +72,13 @@ router.post("/v1/resources/data", (req, res) => {
         });
       });
       // Find the the nearest beacon
-      let maxCount = markers.data.reduce((prev, current) => { 
+      /*let maxCount = markers.data.reduce((prev, current) => { 
         return (prev.count > current.count) ? prev : current 
       });
       markers.max = maxCount.count;
+      */
+     console.log('resp: ' + JSON.stringify(markers));
       res.setHeader('Content-Type', 'application/json');
-      console.log('resp: ' + JSON.stringify(markers));
       res.end(JSON.stringify(markers, null, 3));
     })
 });
