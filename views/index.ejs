@@ -6,10 +6,14 @@
 <body>
   <div class="container">
     <div class="title_container">
-      <h1>Heatmap Beacon Tracking Application</h1>
+      <h1>Aplicação de visualização dos dados gerados pelo aplicativo BeaconTracking através de mapa de calor</h1>
     </div>
     <div class="map_container">
       <div id="map" style="height: 600px; border: 1px solid #AAA;"></div>
+      <div class="legend-area" style="align-items: flex-end; display: flex;
+                    justify-items: flex-start; flex-direction: column;">
+        <img id="gradient" src="./images/legenda.png" >
+       </div>
     </div>
     <div class="form_container">
       <div class="input_box">
@@ -23,9 +27,10 @@
         <span class="input_label">Data fim</span>
       </div>
       <div class="input_box">
-          <input id="send" class="button" value="Buscar posições" type="submit"/>
+          <input id="send" class="button" value="Buscar" type="submit"/>
       </div>
     </div>
+    
     <div class="search">
       Buscando Dados...
     </div>

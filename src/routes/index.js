@@ -56,7 +56,8 @@ router.post("/v1/resources/data", (req, res) => {
   getSomeData(req.body)
     .then(response => {
       let markers = {
-        max: 30,
+        max: 100,
+        min: 0,
         data: [] 
       };
       response.data.resources.forEach(res => {
